@@ -220,7 +220,8 @@
       "emptyStory": "Yayınlamadan önce en az bir yazılı cevap, kayıt veya atölye fotoğrafı ekle.",
       "filmRequired": "Hikâyeni yayımlamadan önce filmini oluştur.",
       "conflict": "Hikâyen başka bir pencerede güncellendi. En son sürümü görmek için bu sayfayı yeniden yükle.",
-      "consentRequired": "Yayımlamadan önce lütfen yukarıdaki onayı işaretle."
+      "consentRequired": "Yayımlamadan önce lütfen yukarıdaki onayı işaretle.",
+      "visualRequired": "Yayımlamadan önce işinden en az bir fotoğraf veya video ekle. Görsel olmadan film oluşturulamaz ve hikâyen ayrı kayıtların listesi olarak görünür."
     },
     "banner": {
       "startTitle": "Zanaat Hikâyeni Paylaş",
@@ -336,7 +337,9 @@
       "uploadWrongType": "Tarayıcılar bu tür videoyu oynatamaz, hikâyende boş bir oynatıcı görünür. MP4 biçimine dönüştürüp tekrar dene. MP4, MOV, WebM ve MKV çalışır.",
       "uploadTooLarge": "Bu film çok büyük. En fazla {max} MB.",
       "uploadRenderBusy": "Şu anda bir film oluşturuluyor. Bitmesini bekle, sonra kendi filmini yükle.",
-      "generateFailedKeptUpload": "Cevaplarından film oluşturamadık, bu yüzden kendi filmin hâlâ burada."
+      "generateFailedKeptUpload": "Cevaplarından film oluşturamadık, bu yüzden kendi filmin hâlâ burada.",
+      "showOnStory": "Bu filmi hikâyemde göster",
+      "notShowingYet": "Bu film henüz genel hikâyende değil. Oraya koymak için \"Bu filmi hikâyemde göster\" seçeneğini kullan."
     },
     "summary": {
       "label": "Kısa özet (yaklaşık 100 kelime)",

@@ -220,7 +220,8 @@
       "emptyStory": "Add at least one written answer, recording, or workshop photo before publishing.",
       "filmRequired": "Create your film before publishing your story.",
       "conflict": "Your story was updated in another window. Reload this page to see the latest version.",
-      "consentRequired": "Please confirm the consent above before publishing."
+      "consentRequired": "Please confirm the consent above before publishing.",
+      "visualRequired": "Add at least one photo or video of your work before publishing. Without a picture your story cannot be made into a film, and it would appear as a list of separate recordings."
     },
     "banner": {
       "startTitle": "Share Your Craft Story",
@@ -336,7 +337,9 @@
       "uploadWrongType": "Browsers cannot play this kind of video, so it would show as an empty player on your story. Convert it to MP4 and try again. MP4, MOV, WebM and MKV all work.",
       "uploadTooLarge": "That film is too large. Maximum size is {max} MB.",
       "uploadRenderBusy": "A film is being created right now. Wait for it to finish, then upload yours.",
-      "generateFailedKeptUpload": "We could not create a film from your answers, so your own film is still here."
+      "generateFailedKeptUpload": "We could not create a film from your answers, so your own film is still here.",
+      "showOnStory": "Show this film on my story",
+      "notShowingYet": "This film is not on your public story yet. Select \"Show this film on my story\" to put it there."
     },
     "summary": {
       "label": "Short summary (about 100 words)",

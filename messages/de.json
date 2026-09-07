@@ -218,7 +218,8 @@
       "emptyStory": "Füge mindestens eine schriftliche Antwort, eine Aufnahme oder ein Werkstattfoto hinzu, bevor du veröffentlichst.",
       "filmRequired": "Erstelle deinen Film, bevor du deine Geschichte veröffentlichst.",
       "conflict": "Deine Geschichte wurde in einem anderen Fenster aktualisiert. Lade diese Seite neu, um die neueste Version zu sehen.",
-      "consentRequired": "Bitte bestätige die Einwilligung, bevor du veröffentlichst."
+      "consentRequired": "Bitte bestätige die Einwilligung, bevor du veröffentlichst.",
+      "visualRequired": "Füge vor dem Veröffentlichen mindestens ein Foto oder Video deiner Arbeit hinzu. Ohne Bild lässt sich kein Film erstellen, und deine Geschichte erschiene als Liste einzelner Aufnahmen."
     },
     "banner": {
       "startTitle": "Teile die Geschichte deines Handwerks",
@@ -334,7 +335,9 @@
       "uploadWrongType": "Browser können diese Art von Video nicht abspielen, auf deiner Geschichte erschiene nur ein leerer Player. Wandle es in MP4 um und versuche es erneut. MP4, MOV, WebM und MKV funktionieren.",
       "uploadTooLarge": "Dieser Film ist zu groß. Maximal {max} MB.",
       "uploadRenderBusy": "Gerade wird ein Film erstellt. Warte, bis er fertig ist, und lade dann deinen hoch.",
-      "generateFailedKeptUpload": "Wir konnten aus deinen Antworten keinen Film erstellen, dein eigener Film ist weiterhin da."
+      "generateFailedKeptUpload": "Wir konnten aus deinen Antworten keinen Film erstellen, dein eigener Film ist weiterhin da.",
+      "showOnStory": "Diesen Film in meiner Geschichte zeigen",
+      "notShowingYet": "Dieser Film ist noch nicht in deiner öffentlichen Geschichte. Wähle \"Diesen Film in meiner Geschichte zeigen\", um ihn dort zu platzieren."
     },
     "summary": {
       "label": "Kurze Zusammenfassung (etwa 100 Wörter)",

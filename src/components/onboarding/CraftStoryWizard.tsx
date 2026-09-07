@@ -260,6 +260,8 @@ export function CraftStoryWizard({
                     setError(t('errors.emptyStory'))
                 } else if (body?.error === 'FILM_REQUIRED') {
                     setError(t('errors.filmRequired'))
+                } else if (body?.error === 'VISUAL_REQUIRED') {
+                    setError(t('errors.visualRequired'))
                 } else if (body?.error === 'CONSENT_REQUIRED') {
                     setError(t('errors.consentRequired'))
                 } else {
@@ -692,7 +694,7 @@ function ReviewStep({
             <p className="mb-6 text-base text-muted-foreground">{t('review.lead')}</p>
 
             {/* The film is the headline of the story — offer it first. */}
-            <StoryFilmPanel />
+            <StoryFilmPanel storyPublished={story.status === 'PUBLISHED'} />
 
             <div className="mt-6">
                 <SummaryEditor value={summaryText} onChange={onSummaryChange} onPersist={onPersistSummary} />

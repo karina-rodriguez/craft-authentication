@@ -220,7 +220,8 @@
       "emptyStory": "Añade al menos una respuesta escrita, una grabación o una foto del taller antes de publicar.",
       "filmRequired": "Crea tu película antes de publicar tu historia.",
       "conflict": "Tu historia se actualizó en otra ventana. Recarga esta página para ver la versión más reciente.",
-      "consentRequired": "Confirma el consentimiento antes de publicar."
+      "consentRequired": "Confirma el consentimiento antes de publicar.",
+      "visualRequired": "Añade al menos una foto o vídeo de tu trabajo antes de publicar. Sin una imagen no se puede crear un film, y tu historia aparecería como una lista de grabaciones sueltas."
     },
     "banner": {
       "startTitle": "Comparte la historia de tu artesanía",
@@ -336,7 +337,9 @@
       "uploadWrongType": "Los navegadores no pueden reproducir este tipo de vídeo, así que en tu historia aparecería un reproductor vacío. Conviértelo a MP4 e inténtalo de nuevo. MP4, MOV, WebM y MKV funcionan.",
       "uploadTooLarge": "Ese film es demasiado grande. El máximo es {max} MB.",
       "uploadRenderBusy": "Se está creando un film ahora mismo. Espera a que termine y sube el tuyo.",
-      "generateFailedKeptUpload": "No pudimos crear un film con tus respuestas, así que tu propio film sigue aquí."
+      "generateFailedKeptUpload": "No pudimos crear un film con tus respuestas, así que tu propio film sigue aquí.",
+      "showOnStory": "Mostrar este film en mi historia",
+      "notShowingYet": "Este film aún no está en tu historia pública. Selecciona \"Mostrar este film en mi historia\" para ponerlo ahí."
     },
     "summary": {
       "label": "Resumen breve (unas 100 palabras)",
