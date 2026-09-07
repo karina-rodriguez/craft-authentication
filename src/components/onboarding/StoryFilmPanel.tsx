@@ -27,7 +27,12 @@ interface FilmView {
     updatedAt: string
 }
 
-export function StoryFilmPanel() {
+/**
+ * @param storyPublished whether the story is already live. A film only becomes
+ * public when the story is published, so a film rendered after that point sits
+ * finished but hidden until the artisan is told to show it.
+ */
+export function StoryFilmPanel({ storyPublished = false }: { storyPublished?: boolean }) {
     const t = useTranslations('craftStory.film')
     const tStory = useTranslations('craftStory')
 
@@ -172,6 +177,15 @@ export function StoryFilmPanel() {
                         {film.isPublic && (
                             <span className="text-xs font-medium text-warm">{t('published')}</span>
                         )}
+                        {/* Rendering a film for an already published story does
+                            not put it on the page: only publishing does that, and
+                            the story is published already. Without this the film
+                            sits finished and invisible with nothing to press. */}
+                        {!film.isPublic && storyPublished && (
+                            <Button type="button" size="sm" onClick={() => void togglePublish()} disabled={busy}>
+                                {t('showOnStory')}
+                            </Button>
+                        )}
                     </div>
                     {isUploaded && (
                         <p className="text-xs text-muted-foreground">{t('uploadedBadge')}</p>
@@ -185,8 +199,14 @@ export function StoryFilmPanel() {
                             {t('generateFailedKeptUpload')}
                         </p>
                     )}
-                    {!film.isPublic && (
+                    {!film.isPublic && !storyPublished && (
                         <p className="text-xs text-muted-foreground">{t('willBeHighlight')}</p>
+                    )}
+                    {!film.isPublic && storyPublished && (
+                        <p className="flex items-center gap-1.5 text-xs text-amber-600 dark:text-amber-400">
+                            <AlertCircle className="h-3.5 w-3.5" />
+                            {t('notShowingYet')}
+                        </p>
                     )}
                     {stale && (
                         <p className="flex items-center gap-1.5 text-xs text-amber-600 dark:text-amber-400">

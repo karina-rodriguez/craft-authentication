@@ -69,7 +69,24 @@ export async function POST(request: Request) {
         // before publishing (the film is the story's headline). A story that
         // can't make a film publishes as the written page, and a FAILED render
         // is allowed through so a broken render never traps the artisan.
-        if (canMakeFilm(await getFilmIngredients(story))) {
+        // A story told out loud needs something to look at. Without a visual no
+        // film can be built, and the public page falls back to listing every
+        // recording as its own bare player, which reads as a broken page rather
+        // than as a story. Ask for one picture instead of publishing that.
+        const ingredients = await getFilmIngredients(story)
+        const hasVisual = ingredients.workshopCount >= 1 || ingredients.videoAnswerCount >= 1
+        if (ingredients.spokenCount >= 1 && !hasVisual) {
+            return NextResponse.json(
+                {
+                    error: 'VISUAL_REQUIRED',
+                    message:
+                        'Add at least one photo or video of your work before publishing, so your story can be shown as a film rather than as a list of recordings.',
+                },
+                { status: 400 }
+            )
+        }
+
+        if (canMakeFilm(ingredients)) {
             const film = await prisma.storyFilm.findUnique({
                 where: { storyId: story.id },
                 select: { status: true },

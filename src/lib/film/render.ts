@@ -110,6 +110,17 @@ async function renderCard(params: {
 
 // A still photo with a slow Ken Burns move. Feeds a single frame and lets
 // zoompan generate the frames via d= (never -loop 1 + select, which deadlocks).
+// A still held for the shot, drifting slowly so the frame is never static.
+//
+// The pan works on an already blur-padded composition rather than on the raw
+// image. Zooming the raw image meant taking a 16:9 window out of the middle of
+// it, which on a portrait photo threw away the top and bottom, and the old 1.5x
+// travel pushed that crop further still. Composing first means the whole picture
+// is always on screen, and the drift is gentle enough that it only ever eats into
+// the blurred surround.
+const PAN_TRAVEL = 0.08
+const PAN_PER_FRAME = 0.0007
+
 async function renderImageShot(
     imagePath: string,
     durationSec: number,
@@ -119,19 +130,39 @@ async function renderImageShot(
     const frames = Math.max(1, Math.round(durationSec * FILM_FPS))
     const zoom =
         panDirection === 'in'
-            ? `z='min(1+0.0007*on,1.5)'`
-            : `z='max(1.3-0.0007*on,1.0)'`
-    const vf =
-        `scale=4000:-2,zoompan=${zoom}:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':` +
-        `d=${frames}:s=${FILM_WIDTH}x${FILM_HEIGHT}:fps=${FILM_FPS},format=yuv420p,setsar=1`
+            ? `z='min(1+${PAN_PER_FRAME}*on,${1 + PAN_TRAVEL})'`
+            : `z='max(${1 + PAN_TRAVEL}-${PAN_PER_FRAME}*on,1.0)'`
+
+    // Compose at twice the output size so the pan resamples down rather than up.
+    const composeW = FILM_WIDTH * 2
+    const composeH = FILM_HEIGHT * 2
+    const filter =
+        blurPadFilter('0:v', 'composed', composeW, composeH) +
+        `;[composed]zoompan=${zoom}:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':` +
+        `d=${frames}:s=${FILM_WIDTH}x${FILM_HEIGHT}:fps=${FILM_FPS},format=yuv420p,setsar=1[v]`
+
     await runFfmpeg([
         '-i', imagePath,
-        '-vf', vf,
+        '-filter_complex', filter,
+        '-map', '[v]',
         '-frames:v', String(frames),
         '-c:v', 'libx264', '-preset', 'veryfast', '-pix_fmt', 'yuv420p', '-r', String(FILM_FPS),
         '-an',
         '-y', outPath,
     ])
+}
+
+// Fit a source of any shape into the 16:9 frame: the whole thing scaled to fit,
+// over a blurred, cover-cropped copy of itself filling the rest. Cropping to fill
+// instead would cut the top and bottom off a portrait photo, which is where most
+// of a person is.
+function blurPadFilter(inLabel: string, outLabel: string, width: number, height: number): string {
+    return (
+        `[${inLabel}]split[bgsrc][fgsrc];` +
+        `[bgsrc]scale=${width}:${height}:force_original_aspect_ratio=increase,crop=${width}:${height},boxblur=20:2[bg];` +
+        `[fgsrc]scale=${width}:${height}:force_original_aspect_ratio=decrease[fg];` +
+        `[bg][fg]overlay=(W-w)/2:(H-h)/2,setsar=1[${outLabel}]`
+    )
 }
 
 // A workshop clip (or talking head) trimmed to length, muted, and blur-padded
@@ -145,10 +176,8 @@ async function renderVideoShot(
     startSec = 0,
 ): Promise<void> {
     const filter =
-        `[0:v]split[a][b];` +
-        `[a]scale=${FILM_WIDTH}:${FILM_HEIGHT}:force_original_aspect_ratio=increase,crop=${FILM_WIDTH}:${FILM_HEIGHT},boxblur=20:2[bg];` +
-        `[b]scale=${FILM_WIDTH}:${FILM_HEIGHT}:force_original_aspect_ratio=decrease[fg];` +
-        `[bg][fg]overlay=(W-w)/2:(H-h)/2,setsar=1,format=yuv420p[v]`
+        blurPadFilter('0:v', 'padded', FILM_WIDTH, FILM_HEIGHT) +
+        `;[padded]format=yuv420p[v]`
     await runFfmpeg([
         '-stream_loop', '-1',
         // Input-side seek: fast, keyframe accurate, which is fine for B-roll.
